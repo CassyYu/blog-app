@@ -34,7 +34,7 @@ export default function PostDrawer({ form }: any) {
 		axios.post('/post', postData)
 			.then((res) => {
 				form.resetFields();
-				if (res.status === 200) Message.success('文章发送成功');
+				if (res.data.code === 0) Message.success(res.data.message);
 				else Message.warning('文章发送失败，已存至草稿箱');
 			})
 	}

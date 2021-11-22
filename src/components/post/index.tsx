@@ -1,4 +1,4 @@
-import { Typography, Space, Tag, Divider } from '@arco-design/web-react';
+import { Typography, Space, Tag, Divider, Message } from '@arco-design/web-react';
 import axios from '../../api/axios';
 import { Children } from 'react';
 import { useRequest } from 'ahooks';
@@ -16,7 +16,10 @@ function getPost(): Promise<string> {
 	const postTitle = decodeURI(path.replace('/post/', ''));
 	return new Promise((resolve) =>
 		axios.post('/getPost', { title: postTitle })
-			.then(res => { resolve(res.data?.post[0]); })
+			.then(res => {
+				if (res.data.code === 0) resolve(res.data.data);
+				else Message.info(res.data.message)
+			})
 	);
 }
 
@@ -26,19 +29,22 @@ export default function PostPage() {
 
 	if (error) return <div>error</div>
 	if (loading) return <div>loading</div>
+
+	const { title, content, tags } = data.post;
+
 	return (
 		<div className='flex'>
-			<div className='md:ml-12 md:mr-36 overflow-y-scroll w-full'>
+			<div className='lg:mx-36 overflow-y-scroll w-full'>
 				<Layout>
 					<Typography.Title>
-						<div id='Arco'>{data.title}</div>
+						<div id='Arco'>{title}</div>
 					</Typography.Title>
 					<Typography.Text type='secondary'>
-						{data.content}
+						{content}
 					</Typography.Text>
 				</Layout>
 				<Space className='mt-8'>
-					{data.tags?.split(' ').map((tag: string) => <Tag style={{color: '#666'}}><IconAttachment />{tag}</Tag>)}
+					{tags.split(' ').map((tag: string) => <Tag key={tag} style={{ color: '#666' }}><IconAttachment />{tag}</Tag>)}
 				</Space>
 				<Divider orientation='center'>评论区</Divider>
 				<Guestbook />

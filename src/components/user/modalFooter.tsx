@@ -9,37 +9,24 @@ export default function ModalFooter(props: any) {
 		if (name === 'login') {
 			form.validate().then((res: any) => {
 				const { email, password } = res;
-				axios.post('/user/login', { email: email, password: password })
-					.then(res => {
-						const { success, msg } = res.data;
-						if (success) {
-							const { token } = res.data;
+				axios.post('/user/login', { email, password })
+					.then(res => { 
+						console.log('post login')
+						const { code, message, data } = res.data;
+						if (code === 0) {
+							const { token } = data;
 							localStorage.setItem('token', token);
-							Message.success(msg);
+							Message.success(message);
 							form.resetFields();
 							setVisible('');
-						} else if (!success && msg === '密码错误') {
-							form.setFields({
-								password: {
-									value: '',
-									error: { message: msg }
-								}
-							});
-							setVisible('login');
 						} else {
-							form.setFields({
-								email: {
-									value: '',
-									error: { message: msg }
-								},
-								password: { value: '' }
-							});
+							Message.warning(message)
 							setVisible('login');
 						}
 					})
 			});
 		} else {
-			form.validate().then((res: any) => {
+			form.validate().then(() => {
 				Message.success('登录成功');
 				form.resetFields();
 				setVisible('');

@@ -11,12 +11,14 @@ import PostPage from './components/post/.';
 import axios from '../src/api/axios';
 import { useRequest } from 'ahooks';
 import { Article } from './api/types';
+import { Message } from '@arco-design/web-react';
 
 function getDataSource(): Promise<string> {
 	return new Promise(resolve =>
 		axios.get('/dataSource')
 			.then(res => {
 				if (res.data.code === 0) resolve(res.data.data)
+				else Message.info(res.data.message);
 			})
 	)
 }
