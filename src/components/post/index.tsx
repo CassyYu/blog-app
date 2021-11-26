@@ -1,9 +1,9 @@
-import { Typography, Space, Tag, Divider, Message } from '@arco-design/web-react';
+import { Typography, Space, Divider, Message } from '@arco-design/web-react';
 import axios from '../../api/axios';
 import { Children } from 'react';
 import { useRequest } from 'ahooks';
 import Guestbook from './guestbook';
-import { IconAttachment } from '@arco-design/web-react/icon';
+import { IconTags } from '@arco-design/web-react/icon';
 
 function Layout(props: any) {
 	return Children.map(props.children, (child, index) => {
@@ -34,7 +34,7 @@ export default function PostPage() {
 
 	return (
 		<div className='flex'>
-			<div className='lg:mx-36 overflow-y-scroll w-full'>
+			<div className='mx-4 lg:mx-36 overflow-y-scroll w-full'>
 				<Layout>
 					<Typography.Title>
 						<div id='Arco'>{title}</div>
@@ -43,8 +43,9 @@ export default function PostPage() {
 						{content}
 					</Typography.Text>
 				</Layout>
-				<Space className='mt-8'>
-					{tags.split(' ').map((tag: string) => <Tag key={tag} style={{ color: '#666' }}><IconAttachment />{tag}</Tag>)}
+				<Space className='mt-8 text-gray-500'>
+					<IconTags />
+					{tags.split(' ').map((tag: string) => <span key={tag} style={{fontSize: '12px'}}>{tag}</span>)}
 				</Space>
 				<Divider orientation='center'>评论区</Divider>
 				<Guestbook />

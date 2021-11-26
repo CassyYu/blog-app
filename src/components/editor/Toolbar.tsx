@@ -3,7 +3,7 @@ import { IconUndo, IconRedo, IconH1, IconH2, IconH3, IconHighlight, IconBold, Ic
 
 export default function Toolbar() {
 	return (
-		<div id='toolbar' className='mt-6 flex justify-between border-b text-xl text-gray-600 overflow-scroll'>
+		<div id='toolbar' className='mt-6 flex justify-between text-xl text-gray-600 overflow-scroll'>
 			<Space size='large'>
 				<Space size='medium'>
 					<IconUndo />

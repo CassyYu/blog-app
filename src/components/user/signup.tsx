@@ -12,8 +12,8 @@ export default function Signup(props: any) {
 	const [form] = Form.useForm();
 	const [options, setOptions] = useState<string[]>();
 
-	function postEmail() {
-		axios.post('/user/code', { email: form.getFieldValue('email') }).then(res => console.log(res))
+	function getCode() {
+		axios.post('/user/code', { email: form.getFieldValue('email') })
 	}
 
 	function handleSearch(inputValue: string) {
@@ -60,7 +60,7 @@ export default function Signup(props: any) {
 						<Input maxLength={6} />
 					</Form.Item>
 					<Button className='mr-20' type='outline'
-						onClick={postEmail}
+						onClick={getCode}
 					>点击获取</Button>
 				</div>
 				<Form.Item label='密码' field='passward'

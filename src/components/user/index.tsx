@@ -1,5 +1,5 @@
 import { Avatar, Message, Modal } from "@arco-design/web-react"
-import { IconUser, IconExport } from "@arco-design/web-react/icon";
+import { IconUser, IconExport, IconImport } from "@arco-design/web-react/icon";
 import Login from "../user/login";
 import Signup from "../user/signup";
 import { useState, useEffect } from "react";
@@ -13,17 +13,12 @@ export default function User() {
 	const token = localStorage.getItem('token');
 
 	useEffect(() => {
-		axios.post('/user/verify', { token }).then(res => {
-			console.log('post verify')
+		axios.get('/user/verify').then(res => {
 			const { code, data } = res.data;
-			if (code === 0) {
-				console.log("1: " + data.user.userName)
-				setUser(data.user.userName)
-			}
+			if (code === 0) setUser(data.user.userName)
 		})
-	}, [])
+	}, [token])
 
-	console.log("render " + user)
 
 	if (user === '') {
 		return (
@@ -31,7 +26,7 @@ export default function User() {
 				<Avatar
 					size={34}
 					shape='circle'
-					triggerIcon={<IconUser />}
+					triggerIcon={<IconImport />}
 					triggerType={'mask'}
 					onClick={() => {
 						setVisible('login')

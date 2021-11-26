@@ -10,7 +10,6 @@ import Page404 from './components/page/404';
 import PostPage from './components/post/.';
 import axios from '../src/api/axios';
 import { useRequest } from 'ahooks';
-import { Article } from './api/types';
 import { Message } from '@arco-design/web-react';
 
 function getDataSource(): Promise<string> {
@@ -39,7 +38,6 @@ export default function App() {
 				<Route path="/search"><Page><SearchPage data={data} /></Page></Route>
 				<Route path="/editor"><EditorPage /></Route>
 				<Route path="/post"><Page><PostPage /></Page></Route>
-				{data.map((post: Article) => <Route key={post.title} path={"/post/" + post.title}></Route>)}
 				<Route path="/" component={Page404} />
 			</Switch>
 		</Router>

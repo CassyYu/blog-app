@@ -11,7 +11,6 @@ export default function ModalFooter(props: any) {
 				const { email, password } = res;
 				axios.post('/user/login', { email, password })
 					.then(res => { 
-						console.log('post login')
 						const { code, message, data } = res.data;
 						if (code === 0) {
 							const { token } = data;

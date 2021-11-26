@@ -8,15 +8,17 @@ const render = (actions: ReactChild[], item: Article, index: number) => (
 		<List.Item.Meta
 			className='overflow-scroll'
 			title={
-				<span className='my-2 font-medium text-lg text-gray-700 cursor-pointer hover:text-blue-600'>{item.title}</span>
+				<div className='w-full flex justify-between items-center'>
+					<span className='my-2 font-medium text-lg text-gray-700 cursor-pointer hover:text-blue-600'>{item.title}</span>
+					<span className='ml-4' style={{ fontWeight: 400, color: '#aaa' }}>{item.p_date}</span>
+				</div>
 			}
 			description={
 				<div>
-					<Space size='small'>
-						{item.tags.split(' ').map((tag: string, idx: number) => <small key={idx} className='px-2 py-1 rounded-md bg-gray-100 leading-10'><IconAttachment />{tag}</small>)}
-					</Space>
+					{item.state === 'private' ? <small className='mr-2 px-2 py-1 rounded-md bg-gray-100'>{'私密'}</small> : <></>}
+					{item.tags.split(' ').map((tag: string, idx: number) => <small key={idx} className='mr-2 px-2 py-1 rounded-md bg-gray-100'><IconAttachment />{tag}</small>)}
 					<br />
-					<Space size='medium'>
+					<Space size='medium' className='mt-2'>
 						<Space size='mini'><IconEye />12</Space>
 						<Space size='mini'><IconHeart />234</Space>
 						<Space size='mini'><IconMessage />34</Space>

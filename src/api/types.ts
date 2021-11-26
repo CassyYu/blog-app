@@ -13,8 +13,3 @@ export type TagObj = {
 	value: number,
 	key: string
 }
-
-export type Context = {
-	value: string,
-	setState: React.Dispatch<React.SetStateAction<string>>
-}

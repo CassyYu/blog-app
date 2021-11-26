@@ -20,11 +20,7 @@ export default function PostDrawer({ form }: any) {
 	const [confirmLoading, setConfirmLoading] = useState(false);
 
 	const Option = Select.Option;
-	const options = [];
-	for (let i = 1; i < 10; i++) {
-		options.push(`Tag${i}`);
-	}
-
+	const options: string[] = [];
 
 	function handleSubmit() {
 		const postData = {

@@ -1,4 +1,4 @@
-import { Timeline, Grid } from '@arco-design/web-react';
+import { Timeline, Grid, Empty } from '@arco-design/web-react';
 import { IconAttachment } from '@arco-design/web-react/icon';
 import { Link } from 'react-router-dom';
 import { Article } from '../../api/types';
@@ -16,6 +16,11 @@ function handleDate(p_date: string) {
 }
 
 export default function ArchivePage({ data }: { data: Article[] }) {
+	if (!data.length) return (
+		<div className='m-8'>
+			<Empty />
+		</div>
+	)
 	return (
 		<div className='m-8'>
 			<Timeline mode='left' labelPosition='relative' reverse>
