@@ -6,12 +6,6 @@ import { Select } from '@arco-design/web-react';
 import axios from '../../api/axios';
 import { Link } from 'react-router-dom';
 
-const formItemLayout = {
-	wrapperCol: {
-		span: 24,
-	},
-};
-
 const imageSrc = `https://picsum.photos/id/${Date.now() % 100}/1000/800`;
 
 export default function PostDrawer({ form }: any) {
@@ -25,7 +19,7 @@ export default function PostDrawer({ form }: any) {
 	function handleSubmit() {
 		const postData = {
 			...form.getFieldsValue(),
-			e_date: Date.now()
+			e_time: Date.now()
 		}
 		axios.post('/post', postData)
 			.then((res) => {
@@ -62,7 +56,11 @@ export default function PostDrawer({ form }: any) {
 					</Space>
 				}
 			>
-				<Form {...formItemLayout} form={form} layout='vertical'>
+				<Form
+					form={form}
+					layout='vertical'
+					wrapperCol={{ span: 24 }}
+				>
 					<Form.Item
 						label='文章标题'
 						field='title'
@@ -110,13 +108,13 @@ export default function PostDrawer({ form }: any) {
 						field='state'
 					>
 						<Select defaultValue='public' style={{ width: 345 }}>
-							{<Option key='public' value='public'>公开</Option>}
-							{<Option key='private' value='private'>私密</Option>}
+							{<Option key='public' value='1'>公开</Option>}
+							{<Option key='private' value='2'>私密</Option>}
 						</Select>
 					</Form.Item>
 				</Form>
 			</Drawer>
-		</div>
+		</div >
 	);
 }
 

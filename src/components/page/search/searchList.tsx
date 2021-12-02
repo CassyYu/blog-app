@@ -1,5 +1,4 @@
 import { List } from '@arco-design/web-react';
-import { Article } from "../../../api/types";
 import DateTime from '../../../api/date.js';
 import { Link } from 'react-router-dom';
 
@@ -12,14 +11,14 @@ function handleDate(p_date: string) {
 	return dateString;
 }
 
-export default function SearchList({ value, data }: { value: string, data: Article[] }) {
+export default function SearchList({ value }: { value: string }) {
 	return (
 		<List
 			bordered={false}
 			wrapperStyle={{ width: 'auto' }}
-			dataSource={data.filter(item => item.title.indexOf(value) > 0 || item.brief.indexOf(value) > 0 || handleDate(item.p_date).indexOf(value) > 0)}
+			// dataSource={data.filter(item => item.title.indexOf(value) > 0 || item.brief.indexOf(value) > 0 || handleDate(item.p_date).indexOf(value) > 0)}
 			render={(item, index) => (
-				<Link to={'/post/' + item.title}>
+				<Link to={'/post/' + item.id}>
 					<List.Item key={index}>
 						<List.Item.Meta
 							title={

@@ -3,9 +3,11 @@ import { IconClockCircle, IconEye, IconHeart, IconMessage } from '@arco-design/w
 import { Article } from '../../../api/types';
 import DateTime from '../../../api/date.js';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { getArticlesByTag } from '../../../api/servers';
 
-function handleDate(p_date: string) {
-	const date = new Date(parseInt(p_date));
+function handleDate(p_time: number) {
+	const date = new Date(p_time);
 	const Year = date.getFullYear();
 	const Month = date.getMonth() + 1;
 	const Day = date.getDate();
@@ -13,7 +15,19 @@ function handleDate(p_date: string) {
 	return dateString;
 }
 
-export default function TagsList({ data }: { data: Article[] }) {
+export default function TagsList() {
+
+	const [data, setData] = useState();
+
+	useEffect(() => {
+		(async () => {
+			const query = window.location.search;
+			const tag = query ? query.replace('?tag=', '') : '';
+			const res = await getArticlesByTag(tag);
+			setData(res.data);
+		})()
+	}, [])
+
 	return (
 		<List
 			bordered={true}
@@ -23,20 +37,19 @@ export default function TagsList({ data }: { data: Article[] }) {
 			}}
 			dataSource={data}
 			render={(item, index) => (
-				<Link to={'/post/' + item.title}>
+				<Link to={'/post/' + item.id} key={index}>
 					<List.Item
-						key={index}
 						style={{ padding: '20px', borderBottom: '1px solid var(--color-fill-3)' }}
 						actionLayout='vertical'
 						actions={[
 							<Space size='mini' key={1}>
-								<IconEye />{83}
+								<IconEye />{item.view}
 							</Space>,
 							<Space size='mini' key={2}>
-								<IconHeart />{83}
+								<IconHeart />{item.like}
 							</Space>,
 							<Space size='mini' key={3}>
-								<IconMessage />{1}
+								<IconMessage />{item.comment}
 							</Space>,
 						]}
 						extra={
@@ -55,7 +68,7 @@ export default function TagsList({ data }: { data: Article[] }) {
 										{item.brief}
 									</div>
 									<div className='mt-2'>
-										<IconClockCircle /><DateTime dateString={handleDate(item.p_date)} />
+										<IconClockCircle /><DateTime dateString={handleDate(item.p_time)} />
 									</div>
 								</>
 							}

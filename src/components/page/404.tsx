@@ -9,7 +9,7 @@ export default function Page404() {
 				subTitle='页面未找到'
 				extra={[
 					<Button key='again' style={{ marginRight: 16 }}>重试</Button>,
-					<Link to='/'><Button key='back' type='primary'>返回主页</Button></Link>,
+					<Link to='/' key='back'><Button type='primary'>返回主页</Button></Link>,
 				]}
 			>
 			</Result>

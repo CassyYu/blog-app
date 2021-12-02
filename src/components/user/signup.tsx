@@ -3,11 +3,11 @@ import axios from '../../api/axios';
 import { useState } from 'react';
 import ModalFooter from './modalFooter';
 
+const { Option } = AutoComplete;
+
 export default function Signup(props: any) {
 
 	const { visible, setVisible } = props;
-
-	const { Option } = AutoComplete;
 
 	const [form] = Form.useForm();
 	const [options, setOptions] = useState<string[]>();
@@ -28,7 +28,7 @@ export default function Signup(props: any) {
 			title='注册'
 			visible={visible === 'signup'}
 			onCancel={() => setVisible('')}
-			footer={ModalFooter({ form: form, name: 'signup', setVisible: setVisible })}
+			footer={ModalFooter({ form, name: 'signup', setVisible })}
 		>
 			<Form
 				form={form}

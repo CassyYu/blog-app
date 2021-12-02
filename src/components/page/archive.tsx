@@ -1,13 +1,15 @@
 import { Timeline, Grid, Empty } from '@arco-design/web-react';
 import { IconAttachment } from '@arco-design/web-react/icon';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { getSortedArticles } from '../../api/servers';
 import { Article } from '../../api/types';
 
 const TimelineItem = Timeline.Item;
 const { Row } = Grid;
 
-function handleDate(p_date: string) {
-	const date = new Date(parseInt(p_date));
+function handleDate(p_time: number) {
+	const date = new Date(p_time);
 	const Year = date.getFullYear();
 	const Month = date.getMonth() + 1;
 	const Day = date.getDate();
@@ -15,8 +17,18 @@ function handleDate(p_date: string) {
 	return dateString;
 }
 
-export default function ArchivePage({ data }: { data: Article[] }) {
-	if (!data.length) return (
+export default function ArchivePage() {
+	
+	const [data, setData] = useState<Article[]>();
+
+	useEffect(() => {
+		(async () => {
+			const res = await getSortedArticles('time');
+			setData(res.data)
+		})()
+	}, [])
+
+	if (!data) return (
 		<div className='m-8'>
 			<Empty />
 		</div>
@@ -26,9 +38,9 @@ export default function ArchivePage({ data }: { data: Article[] }) {
 			<Timeline mode='left' labelPosition='relative' reverse>
 				{
 					data.map((item, index) =>
-						<TimelineItem key={index} label={handleDate(item.p_date)}>
+						<TimelineItem key={index} label={handleDate(item.p_time)}>
 							<Row style={{ display: 'inline-flex', alignItems: 'center' }}>
-								<Link to={'/post/' + item.title}>
+								<Link to={'/post/' + item.id}>
 									<div className='mb-8'>
 										<div className='text-lg font-medium'>{item.title}</div>
 										<div className='text-md text-gray-600 my-2'>{item.brief}</div>

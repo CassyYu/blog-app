@@ -1,12 +1,21 @@
-import { Radio, Button } from '@arco-design/web-react';
-import { useState } from 'react';
+import { Radio, Button, Empty } from '@arco-design/web-react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import { Article } from '../../../api/types';
 import ManageList from './manageList';
+import { getArticlesByState } from '../../../api/servers';
 
-export default function ManagePage({ data }: { data: Article[] }) {
+export default function ManagePage() {
 
-	const [state, setState] = useState('all');
+	const [state, setState] = useState(window.location.search ? parseInt(window.location.search.replace('?state=', '')) : 0);
+	const [articles, setArticles] = useState<Article[]>();
+
+	useEffect(() => {
+		(async () => {
+			const res = await getArticlesByState(1);
+			setArticles(res.data)
+		})()
+	}, [])
 
 	return (
 		<div className='m-8 overflow-hidden'>
@@ -14,20 +23,25 @@ export default function ManagePage({ data }: { data: Article[] }) {
 				<Radio.Group
 					type='button'
 					name='lang'
-					defaultValue='all'
+					defaultValue={state.toString()}
 					style={{ marginRight: 20, marginBottom: 20 }}
-					onChange={value => setState(value)}
+					onChange={value => {
+						setState(value);
+						window.location.search = `state=${value}`;
+					}}
 				>
-					<Radio value='all'>全部 {data?.length}</Radio>
-					<Radio value='public'>公开 {data?.filter((data: Article) => data.state === 'public').length}</Radio>
-					<Radio value='private'>私密 {data?.filter((data: Article) => data.state === 'private').length}</Radio>
-					<Radio value='draw'>草稿 0</Radio>
+					<Radio value='0'>全部 {articles?.length}</Radio>
+					<Radio value='1'>公开 {articles?.filter((article: Article) => article.state === 1).length}</Radio>
+					<Radio value='2'>私密 {articles?.filter((article: Article) => article.state === 2).length}</Radio>
+					<Radio value='3'>草稿 {articles?.filter((article: Article) => article.state === 3).length}</Radio>
 				</Radio.Group>
 				<Link to='/editor'>
 					<Button type='primary'>写文章</Button>
 				</Link>
 			</div>
-			<ManageList data={data.filter(item => state === 'all' ? true : item.state === state)} />
+			{articles
+				? <ManageList state={state} />
+				: <Empty />}
 		</div>
 	)
 }

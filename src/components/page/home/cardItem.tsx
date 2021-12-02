@@ -7,8 +7,8 @@ import DateTime from '../../../api/date.js';
 const { Meta } = Card;
 const { Title, Paragraph } = Typography;
 
-function handleDate(p_date: string) {
-	const date = new Date(parseInt(p_date));
+function handleDate(p_time: number) {
+	const date = new Date(p_time);
 	const Year = date.getFullYear();
 	const Month = date.getMonth() + 1;
 	const Day = date.getDate();
@@ -18,7 +18,7 @@ function handleDate(p_date: string) {
 
 export default function CardItem({ item }: { item: Article }) {
 	return (
-		<Link to={'/post/' + item.title}>
+		<Link to={'/post/' + item.id}>
 			<Card
 				className='hover:shadow-md m-2'
 				cover={
@@ -36,15 +36,15 @@ export default function CardItem({ item }: { item: Article }) {
 					[
 						<Space size='mini'>
 							<IconEye />
-							<span>12</span>
+							<span>{item.view}</span>
 						</Space>,
 						<Space size='mini'>
 							<IconHeart />
-							<span>4</span>
+							<span>{item.like}</span>
 						</Space>,
 						<Space size='mini'>
 							<IconMessage />
-							<span>2</span>
+							<span>{item.comment}</span>
 						</Space>
 					]}
 			>
@@ -53,7 +53,7 @@ export default function CardItem({ item }: { item: Article }) {
 						<div className='flex items-center' style={{ color: '#1D2129' }}>
 							<Space size='mini'>
 								<IconClockCircle />
-								<DateTime dateString={handleDate(item.p_date)} />
+								<DateTime dateString={handleDate(item.p_time)} />
 							</Space>
 						</div>
 					}

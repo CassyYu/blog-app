@@ -11,6 +11,10 @@ export default function Page({ children }: { children: ReactElement }) {
 
 	const [collapsed, setCollapsed] = useState(false);
 
+	const pathName = window.location.pathname.substring(1)
+	const menuItem = ['', 'tags', 'archive', 'manage', 'search'];
+	const defaultKey = menuItem.indexOf(pathName).toString();
+	
 	return (
 		<Layout className='h-screen'>
 			<PageHead />
@@ -21,31 +25,31 @@ export default function Page({ children }: { children: ReactElement }) {
 					<Menu
 						className='w-40 h-full'
 						hasCollapseButton
-						defaultSelectedKeys={['1']}
+						defaultSelectedKeys={[defaultKey]}
 						onCollapseChange={() => { setCollapsed(!collapsed) }}
 					>
 						<Link to='/'>
-							<MenuItem key='1'>
+							<MenuItem key='0'>
 								<div><IconHome /> Home</div>
 							</MenuItem>
 						</Link>
 						<Link to='/tags'>
-							<MenuItem key='2'>
+							<MenuItem key='1'>
 								<div><IconTags /> Tags</div>
 							</MenuItem>
 						</Link>
 						<Link to='/archive'>
-							<MenuItem key='3'>
+							<MenuItem key='2'>
 								<div><IconClockCircle /> Archive</div>
 							</MenuItem>
 						</Link>
 						<Link to='/manage'>
-							<MenuItem key='4'>
+							<MenuItem key='3'>
 								<div><IconFolder /> Manage</div>
 							</MenuItem>
 						</Link>
 						<Link to='/search'>
-							<MenuItem key='5'>
+							<MenuItem key='4'>
 								<div><IconSearch /> Search</div>
 							</MenuItem>
 						</Link>

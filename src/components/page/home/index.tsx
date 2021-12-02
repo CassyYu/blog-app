@@ -1,8 +1,20 @@
 import { List } from '@arco-design/web-react';
 import CardItem from './cardItem';
 import { Article } from '../../../api/types';
+import { useEffect, useState } from 'react';
+import { getSortedArticles } from '../../../api/servers';
 
-export default function HomePage({ data }: { data: Article[] }) {
+export default function HomePage() {
+
+	const [data, setData] = useState<Article[]>();
+
+	useEffect(() => {
+		(async () => {
+			const res = await getSortedArticles('hot');
+			setData(res.data)
+		})()
+	}, [])
+
 	return (
 		<List
 			className='my-2'
