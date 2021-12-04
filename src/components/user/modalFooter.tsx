@@ -10,7 +10,7 @@ export default function ModalFooter(props: any) {
 			form.validate().then((res: any) => {
 				const { email, password } = res;
 				axios.post('/user/login', { email, password })
-					.then(res => { 
+					.then(res => {
 						const { code, message, data } = res.data;
 						if (code === 0) {
 							const { token } = data;
@@ -25,11 +25,15 @@ export default function ModalFooter(props: any) {
 					})
 			});
 		} else {
-			form.validate().then(() => {
-				Message.success('登录成功');
-				form.resetFields();
-				setVisible('');
-			})
+			const { email, password, code } = form.getFieldsValue();
+			axios.post('/user/signup', { email, password, code })
+				.then(res => {
+					const { code, message } = res.data;
+					if (code === 0) Message.success(message);
+					else Message.warning(message);
+					form.resetFields();
+				})
+			setVisible('');
 		}
 	}
 

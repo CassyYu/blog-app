@@ -1,4 +1,4 @@
-import { Modal, Form, Input, Button, AutoComplete } from '@arco-design/web-react';
+import { Modal, Form, Input, Button, AutoComplete, Message } from '@arco-design/web-react';
 import axios from '../../api/axios';
 import { useState } from 'react';
 import ModalFooter from './modalFooter';
@@ -14,6 +14,18 @@ export default function Signup(props: any) {
 
 	function getCode() {
 		axios.post('/user/code', { email: form.getFieldValue('email') })
+			.then(res => {
+				const { code, message } = res.data;
+				if (code === 0) {
+					Message.info(message);
+				}
+				else if (code === 1) {
+					Message.warning(message);
+					setVisible('login');
+				} else if (code === 2) {
+					Message.warning(message);
+				}
+			})
 	}
 
 	function handleSearch(inputValue: string) {
@@ -63,7 +75,7 @@ export default function Signup(props: any) {
 						onClick={getCode}
 					>点击获取</Button>
 				</div>
-				<Form.Item label='密码' field='passward'
+				<Form.Item label='密码' field='password'
 					rules={[{
 						validator(value, cb) {
 							if (!value) return cb();
@@ -79,7 +91,7 @@ export default function Signup(props: any) {
 				>
 					<Input.Password defaultValue='password' />
 				</Form.Item>
-				<Form.Item label='再次输入密码' field='passwardAgain'>
+				<Form.Item label='再次输入密码' field='passwordAgain'>
 					<Input.Password defaultValue='password' />
 				</Form.Item>
 			</Form>

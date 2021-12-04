@@ -49,7 +49,7 @@ export default function User() {
 				onClick={() => {
 					Modal.confirm({
 						title: '确定要退出登录吗？',
-						onOk: () => {
+						onOk: async () => {
 							return new Promise((resolve, reject) => {
 								localStorage.removeItem('token');
 								resolve(setUser(''));

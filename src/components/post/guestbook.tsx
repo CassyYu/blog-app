@@ -17,7 +17,6 @@ export default function Guestbook() {
       const pathname = window.location.pathname;
       const post_id = parseInt(pathname.replace('/post/', ''));
       const res = await getCommentsByPostId(post_id);
-      console.log(res)
       setComments(res.data);
       const res1 = await getUser();
       if (res1.code === 0) setUser(res1.data?.user.userName);
