@@ -7,7 +7,7 @@ import { getArticlesByState } from '../../../api/servers';
 
 export default function ManagePage() {
 
-	const [state, setState] = useState(window.location.search ? parseInt(window.location.search.replace('?state=', '')) : 0);
+	const [state, setState] = useState(parseInt(window.location.search.replace('?state=', '')));
 	const [articles, setArticles] = useState<Article[]>();
 
 	useEffect(() => {
@@ -31,9 +31,9 @@ export default function ManagePage() {
 					}}
 				>
 					<Radio value='0'>全部 {articles?.length}</Radio>
-					<Radio value='1'>公开 {articles?.filter((article: Article) => article.state === 1).length}</Radio>
-					<Radio value='2'>私密 {articles?.filter((article: Article) => article.state === 2).length}</Radio>
-					<Radio value='3'>草稿 {articles?.filter((article: Article) => article.state === 3).length}</Radio>
+					<Radio value='1'>公开 {articles?.length ? articles.filter((article: Article) => article.state === 1).length : 0}</Radio>
+					<Radio value='2'>私密 {articles?.length ? articles.filter((article: Article) => article.state === 2).length : 0}</Radio>
+					<Radio value='3'>草稿 {articles?.length ? articles.filter((article: Article) => article.state === 3).length : 0}</Radio>
 				</Radio.Group>
 				<Link to='/editor'>
 					<Button type='primary'>写文章</Button>
