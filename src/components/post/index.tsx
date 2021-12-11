@@ -4,7 +4,6 @@ import { IconBackward, IconTags } from '@arco-design/web-react/icon';
 import { useEffect, useState } from 'react';
 import { getArticleById } from '../../api/servers';
 import { Article } from '../../api/types';
-import { Link } from 'react-router-dom';
 import Page404 from '../page/404';
 
 export default function PostPage() {
@@ -24,7 +23,7 @@ export default function PostPage() {
 		<div className='flex'>
 			<div className='m-4 lg:mx-36 overflow-y-scroll w-full'>
 				<div className=''>
-					<Link to='/'><IconBackward /></Link>
+					<IconBackward className='cursor-pointer' onClick={() => { window.history.back() }} />
 				</div>
 				<div className='text-3xl font-bold my-4'>{article.title}</div>
 				<div>{article.content}</div>

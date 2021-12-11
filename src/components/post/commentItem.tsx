@@ -16,16 +16,17 @@ export default function CommentItem({ comment, level, replyId, setReplyId }: { c
 			{like ? <IconHeartFill style={{ color: '#f53f3f' }} /> : <IconHeart />}
 			{' '}{comment.like + (like ? 1 : 0)}
 		</span>,
-		<span
-			className='cursor-pointer'
-			key='reply'
-			onClick={() => {
-				if (level === 2) return;
-				replyId === comment.id ? setReplyId(undefined) : setReplyId(comment.id)
-			}}
-		>
-			<IconMessage /> Reply
-		</span>
+		level === 1 ?
+			<span
+				className='cursor-pointer'
+				key='reply'
+				onClick={() => {
+					replyId === comment.id ? setReplyId(undefined) : setReplyId(comment.id)
+				}}
+			>
+				<IconMessage /> Reply
+			</span> : <></>
+
 	];
 
 	return (
