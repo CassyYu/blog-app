@@ -26,7 +26,9 @@ export default function PostPage() {
 					<IconBackward className='cursor-pointer' onClick={() => { window.history.back() }} />
 				</div>
 				<div className='text-3xl font-bold my-4'>{article.title}</div>
-				<div>{article.content}</div>
+				<article>
+					<div id='write' dangerouslySetInnerHTML={{ __html: article.content }} />
+				</article>
 				<Space className='mt-8 text-gray-500'>
 					<IconTags />
 					{article.tags.split(' ').map((tag: string) => <span key={tag} style={{ fontSize: '12px' }}>{tag}</span>)}
