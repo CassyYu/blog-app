@@ -5,10 +5,14 @@ import { useEffect, useState } from 'react';
 import { getArticleById } from '../../api/servers';
 import { Article } from '../../api/types';
 import Page404 from '../page/404';
+import createDOMPurify from 'dompurify';
 
 export default function PostPage() {
 
 	const [article, setArticle] = useState<Article>();
+
+	const DOMPurify = createDOMPurify(window);
+	const clean = DOMPurify.sanitize(article ? article.content : '');
 
 	useEffect(() => {
 		(async () => {
@@ -27,7 +31,7 @@ export default function PostPage() {
 				</div>
 				<div className='text-3xl font-bold my-4'>{article.title}</div>
 				<article>
-					<div id='write' dangerouslySetInnerHTML={{ __html: article.content }} />
+					<div id='write' dangerouslySetInnerHTML={{ __html: clean }} />
 				</article>
 				<Space className='mt-8 text-gray-500'>
 					<IconTags />

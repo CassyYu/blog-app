@@ -1877,6 +1877,13 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
+"@types/dompurify@^2.3.3":
+  version "2.3.3"
+  resolved "https://registry.npmmirror.com/@types/dompurify/-/dompurify-2.3.3.tgz#c24c92f698f77ed9cc9d9fa7888f90cf2bfaa23f"
+  integrity sha512-nnVQSgRVuZ/843oAfhA25eRSNzUFcBPk/LOiw5gm8mD9/X7CNcbRkQu/OsjCewO8+VIYfPxUnXvPEVGenw14+w==
+  dependencies:
+    "@types/trusted-types" "*"
+
 "@types/eslint@^7.2.6":
   version "7.28.2"
   resolved "https://registry.npmmirror.com/@types/eslint/download/@types/eslint-7.28.2.tgz?cache=0&sync_timestamp=1635092369821&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40types%2Feslint%2Fdownload%2F%40types%2Feslint-7.28.2.tgz#0ff2947cdd305897c52d5372294e8c76f351db68"
@@ -2071,6 +2078,11 @@
   integrity sha1-AUFipc7mVxgZ1I6ZmYBpTi9lfDw=
   dependencies:
     "@types/jest" "*"
+
+"@types/trusted-types@*":
+  version "2.0.2"
+  resolved "https://registry.npmmirror.com/@types/trusted-types/-/trusted-types-2.0.2.tgz#fc25ad9943bcac11cceb8168db4f275e0e72e756"
+  integrity sha512-F5DIZ36YVLE+PN+Zwws4kJogq47hNgX3Nx6WyDJ3kcplxyke3XIzB8uK5n/Lpm1HBsbGzd6nmGehL8cPekP+Tg==
 
 "@types/uglify-js@*":
   version "3.13.1"
@@ -4660,6 +4672,11 @@ domhandler@^4.0.0, domhandler@^4.2.0:
   integrity sha1-6CXXIdGahrjCAaNSZOImxnjudV8=
   dependencies:
     domelementtype "^2.2.0"
+
+dompurify@^2.3.6:
+  version "2.3.6"
+  resolved "https://registry.npmmirror.com/dompurify/-/dompurify-2.3.6.tgz#2e019d7d7617aacac07cbbe3d88ae3ad354cf875"
+  integrity sha512-OFP2u/3T1R5CEgWCEONuJ1a5+MFKnOYpkywpUSxv/dj1LeBT1erK+JwM7zK0ROy2BRhqVCf0LRw/kHqKuMkVGg==
 
 domutils@^1.7.0:
   version "1.7.0"
