@@ -11,7 +11,7 @@ export default function HomePage() {
 	useEffect(() => {
 		(async () => {
 			const res = await getSortedArticles('hot');
-			setData(res.data)
+			setData(res.data);
 		})()
 	}, [])
 

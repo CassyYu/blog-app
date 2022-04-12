@@ -1,10 +1,9 @@
 import { List, Space } from '@arco-design/web-react';
 import { IconClockCircle, IconEye, IconHeart, IconMessage } from '@arco-design/web-react/icon';
-import { Article } from '../../../api/types';
 import DateTime from '../../../api/date.js';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getArticlesByTag } from '../../../api/servers';
+import { getArticlesByTag, getTags } from '../../../api/servers';
 
 function handleDate(p_time: number) {
 	const date = new Date(p_time);
@@ -22,9 +21,11 @@ export default function TagsList() {
 	useEffect(() => {
 		(async () => {
 			const query = window.location.search;
-			const tag = query ? query.replace('?tag=', '') : '';
-			const res = await getArticlesByTag(tag);
-			setData(res.data);
+			const tagsArr = await getTags();
+			let tag = query ? query.replace('?tag=', '') : '';
+			if (tag !== '0' && tag !== '') tag = tagsArr[parseInt(tag)-1].key;
+			const res1 = await getArticlesByTag(tag);
+			setData(res1.data);
 		})()
 	}, [])
 

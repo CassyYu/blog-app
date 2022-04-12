@@ -48,7 +48,8 @@ export async function getArticlesByValue(value: string, limit: number, offset: n
 
 export async function getArticlesByTag(tag: string, limit = 10, offset = 0) {
 	const res = await axios.post('/getArticlesByTag', { tag, limit, offset });
-	const { articles } = res.data.data;
+	let { articles } = res.data.data;
+	if (tag !== '0' && tag !== '') articles = articles.filter((e: any) => e.tags === tag);
 	return {
 		code: 0,
 		data: articles
@@ -73,7 +74,7 @@ export async function getArticleById(post_id: number) {
 }
 
 export async function getTags(limit = 10, offset = 0) {
-	const res = await axios.post('/getArticles')
+	const res = await axios.post('/getArticles');
 	const { articles } = res.data.data;
 	let tagMap = new Map();
 	articles?.forEach((article: Article) => {

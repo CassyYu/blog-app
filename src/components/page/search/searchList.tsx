@@ -1,6 +1,7 @@
 import { List } from '@arco-design/web-react';
 import DateTime from '../../../api/date.js';
 import { Link } from 'react-router-dom';
+import { Article } from '../../../api/types.js';
 
 function handleDate(p_date: string) {
 	const date = new Date(parseInt(p_date));
@@ -11,15 +12,15 @@ function handleDate(p_date: string) {
 	return dateString;
 }
 
-export default function SearchList({ value }: { value: string }) {
+export default function SearchList({ value, data }: { value: string, data: Article[] | undefined }) {
 	return (
 		<List
 			bordered={false}
 			wrapperStyle={{ width: 'auto' }}
-			// dataSource={data.filter(item => item.title.indexOf(value) > 0 || item.brief.indexOf(value) > 0 || handleDate(item.p_date).indexOf(value) > 0)}
+			dataSource={data?.filter(item => item.title.indexOf(value) > 0 || item.brief.indexOf(value) > 0 || handleDate(item.p_time.toString()).indexOf(value) > 0)}
 			render={(item, index) => (
-				<Link to={'/post/' + item.id}>
-					<List.Item key={index}>
+				<Link to={'/post/' + item.id} key={index}>
+					<List.Item>
 						<List.Item.Meta
 							title={
 								<div className='text-lg hover:text-blue-600'>
@@ -31,7 +32,7 @@ export default function SearchList({ value }: { value: string }) {
 									<div className='my-1'>
 										{item.brief}
 									</div>
-									<DateTime dateString={handleDate(item.p_date)} />
+									<DateTime dateString={handleDate(item.p_time.toString())} />
 								</div>
 							}
 						/>

@@ -35,7 +35,7 @@ export default function PostPage() {
 				</article>
 				<Space className='mt-8 text-gray-500'>
 					<IconTags />
-					{article.tags.split(' ').map((tag: string) => <span key={tag} style={{ fontSize: '12px' }}>{tag}</span>)}
+					{article.tags.split(' ').map((tag: string) => <span key={tag} style={{ fontSize: '0.75rem' }}>{tag}</span>)}
 				</Space>
 				<Guestbook />
 			</div>

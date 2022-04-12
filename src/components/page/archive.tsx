@@ -44,8 +44,8 @@ export default function ArchivePage() {
 									<div className='mb-8'>
 										<div className='text-lg font-medium'>{item.title}</div>
 										<div className='text-md text-gray-600 my-2'>{item.brief}</div>
-										{item.tags.split(' ').map(tag =>
-											<small className='bg-gray-100 px-2 py-0.5 mr-2 rounded-full'><IconAttachment />{tag} </small>)}
+										{item.tags.split(' ').map((tag, idx) =>
+											<small key={idx} className='bg-gray-100 px-2 py-0.5 mr-2 rounded-full'><IconAttachment />{tag} </small>)}
 									</div>
 								</Link>
 							</Row>

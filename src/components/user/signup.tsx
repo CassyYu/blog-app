@@ -5,9 +5,7 @@ import ModalFooter from './modalFooter';
 
 const { Option } = AutoComplete;
 
-export default function Signup(props: any) {
-
-	const { visible, setVisible } = props;
+export default function Signup() {
 
 	const [form] = Form.useForm();
 	const [options, setOptions] = useState<string[]>();
@@ -18,10 +16,9 @@ export default function Signup(props: any) {
 				const { code, message } = res.data;
 				if (code === 0) {
 					Message.info(message);
-				}
-				else if (code === 1) {
+				} else if (code === 1) {
 					Message.warning(message);
-					setVisible('login');
+					setTimeout(() => window.location.href = window.location.href.replace('/signup', 'login'), 1000);
 				} else if (code === 2) {
 					Message.warning(message);
 				}
@@ -38,9 +35,9 @@ export default function Signup(props: any) {
 	return (
 		<Modal
 			title='注册'
-			visible={visible === 'signup'}
-			onCancel={() => setVisible('')}
-			footer={ModalFooter({ form, name: 'signup', setVisible })}
+			visible={true}
+			onCancel={() => window.location.href = window.location.href.replace('/signup', '')}
+			footer={ModalFooter({ form, name: 'signup' })}
 		>
 			<Form
 				form={form}
@@ -49,13 +46,13 @@ export default function Signup(props: any) {
 			>
 				<Form.Item label='邮箱' field='email'
 					rules={[{
-						validator(value, cb) {
-							if (!value) return cb();
+						validator(value, callback) {
+							if (!value) return callback();
 							let valid = true;
 							if (value.indexOf('@') === -1 || value.indexOf('.com') === -1) {
 								valid = false;
 							}
-							return valid ? cb() : cb('请填写正确的邮箱格式');
+							return valid ? callback() : callback('请填写正确的邮箱格式');
 						}
 					}]}
 				>
@@ -77,15 +74,15 @@ export default function Signup(props: any) {
 				</div>
 				<Form.Item label='密码' field='password'
 					rules={[{
-						validator(value, cb) {
-							if (!value) return cb();
+						validator(value, callback) {
+							if (!value) return callback();
 							for (let i = 0; i < value.length; i++) {
 								if ('0' <= value[i] && value[i] <= '9') continue;
 								if ('a' <= value[i] && value[i] <= 'z') continue;
 								if ('A' <= value[i] && value[i] <= 'Z') continue;
-								return cb('密码只能是数字或者英文字母')
+								return callback('密码只能是数字或者英文字母')
 							}
-							return cb();
+							return callback();
 						}
 					}]}
 				>

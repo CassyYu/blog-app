@@ -39,7 +39,7 @@ export default function ManageList({ state }: { state: number }) {
 			const res = await getArticlesByState(state);
 			setArticles(res.data)
 		})()
-	}, [])
+	}, [state])
 
 	return (
 		<List

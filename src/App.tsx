@@ -8,20 +8,39 @@ import EditorPage from './components/editor';
 import Page404 from './components/page/404';
 import PostPage from './components/post';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { ErrorBoundary } from 'react-error-boundary';
 
 export default function App() {
+
+	function ErrorFallback({ error, resetErrorBoundary }: any) {
+		return (
+			<div role="alert">
+				<p>Something went wrong:</p>
+				<pre>{error.message}</pre>
+				<button onClick={resetErrorBoundary}>Try again</button>
+			</div>
+		)
+	}
+
 	return (
-		<Router>
-			<Switch>
-				<Route exact path="/"><Page><HomePage /></Page></Route>
-				<Route path="/tags"><Page><TagsPage /></Page></Route>
-				<Route path="/archive"><Page><ArchivePage /></Page></Route>
-				<Route path="/manage"><Page><ManagePage /></Page></Route>
-				<Route path="/search"><Page><SearchPage /></Page></Route>
-				<Route path="/editor"><EditorPage /></Route>
-				<Route path="/post"><Page><PostPage /></Page></Route>
-				<Route path="/" component={Page404} />
-			</Switch>
-		</Router>
+		<ErrorBoundary FallbackComponent={ErrorFallback}>
+			<Router>
+				<Page>
+					<Switch>
+						<>
+							<Route exact path="/" component={HomePage}></Route>
+							<Route exact path="/login" component={HomePage}></Route>
+							<Route path="/tags" component={TagsPage}></Route>
+							<Route path="/archive" component={ArchivePage}></Route>
+							<Route path="/manage" component={ManagePage}></Route>
+							<Route path="/search" component={SearchPage}></Route>
+							<Route path="/editor" component={EditorPage}></Route>
+							<Route path="/post" component={PostPage}></Route>
+						</>
+						<Route path="/" component={Page404}></Route>
+					</Switch>
+				</Page>
+			</Router>
+		</ErrorBoundary>
 	)
 }

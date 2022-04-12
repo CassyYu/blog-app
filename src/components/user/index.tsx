@@ -4,64 +4,50 @@ import Login from "../user/login";
 import Signup from "../user/signup";
 import { useState, useEffect } from "react";
 import axios from "../../api/axios";
+import { Route } from "react-router-dom";
 
 export default function User() {
 
-	const [visible, setVisible] = useState('');
 	const [user, setUser] = useState('');
-
-	const token = localStorage.getItem('token');
 
 	useEffect(() => {
 		axios.get('/user/verify').then(res => {
 			const { code, data } = res.data;
-			if (code === 0) setUser(data.user.userName)
+			if (code === 0) setUser(data.user.userName);
 		})
-	}, [token])
+	}, []);
 
-
-	if (user === '') {
-		return (
-			<>
-				<Avatar
-					size={34}
-					shape='circle'
-					triggerIcon={<IconImport />}
-					triggerType={'mask'}
-					onClick={() => {
-						setVisible('login')
-					}}
-				><IconUser /></Avatar>
-				<Login visible={visible} setVisible={setVisible} />
-				<Signup visible={visible} setVisible={setVisible} />
-			</>
-		)
-	}
 	return (
 		<>
 			<Avatar
-				style={{ backgroundColor: '#4080FF' }}
+				style={user ? { backgroundColor: '#4080FF' } : {}}
 				size={34}
 				shape='circle'
-				triggerIcon={<IconExport />}
+				triggerIcon={user ? <IconExport /> : <IconImport />}
 				triggerType={'mask'}
 				autoFixFontSize
 				onClick={() => {
-					Modal.confirm({
-						title: '确定要退出登录吗？',
-						onOk: async () => {
-							return new Promise((resolve, reject) => {
-								localStorage.removeItem('token');
-								resolve(setUser(''));
-							}).catch((e) => {
-								Message.error({ content: 'Error occurs!' });
-								throw e;
-							});
-						}
-					});
-				}
-				}
-			>{user[0].toUpperCase()}</Avatar>
+					if (user) {
+						Modal.confirm({
+							title: '确定要退出登录吗？',
+							onOk: async () => {
+								return new Promise((resolve, reject) => {
+									localStorage.removeItem('token');
+									resolve(setUser(''));
+								}).catch((e) => {
+									Message.error({ content: 'Error occurs!' });
+									throw e;
+								});
+							}
+						});
+					} else {
+						const href = window.location.href;
+						window.location.href += href[href.length - 1] === '/' ? 'login' : '/login';
+					}
+				}}
+			>{user ? user[0].toUpperCase() : <IconUser />}</Avatar>
+			<Route path="*/login" component={Login} />
+			<Route path="*/signup" component={Signup} />
 		</>
 	)
 }

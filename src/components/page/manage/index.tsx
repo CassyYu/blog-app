@@ -7,13 +7,13 @@ import { getArticlesByState } from '../../../api/servers';
 
 export default function ManagePage() {
 
-	const [state, setState] = useState(parseInt(window.location.search.replace('?state=', '')));
+	const [state, setState] = useState(parseInt(window.location.search.replace('?state=', '')) || 0);
 	const [articles, setArticles] = useState<Article[]>();
 
 	useEffect(() => {
 		(async () => {
 			const res = await getArticlesByState(1);
-			setArticles(res.data)
+			setArticles(res.data);
 		})()
 	}, [])
 

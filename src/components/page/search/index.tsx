@@ -14,7 +14,7 @@ export default function SearchPage() {
 	useEffect(() => {
 		(async () => {
 			const res = await getSortedArticles('hot');
-			setData(res.data)
+			setData(res.data);
 		})()
 	}, [])
 
@@ -27,7 +27,7 @@ export default function SearchPage() {
 				className='m-8'
 				onChange={value => setValue(value)}
 			/>
-			{value ? <SearchList value={value} /> : <></>}
+			{value ? <SearchList value={value} data={data} /> : <></>}
 		</div>
 	)
 }

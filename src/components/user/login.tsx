@@ -1,18 +1,16 @@
 import { Modal, Form, Input } from '@arco-design/web-react';
 import ModalFooter from './modalFooter';
 
-export default function Login(props: any) {
-
-	const { visible, setVisible } = props;
+export default function Login() {
 
 	const [form] = Form.useForm();
 
 	return (
 		<Modal
 			title='登录'
-			visible={visible === 'login'}
-			onCancel={() => setVisible('')}
-			footer={ModalFooter({ form: form, name: 'login', setVisible: setVisible })}
+			visible={true}
+			onCancel={() => window.location.href = window.location.href.replace('/login', '')}
+			footer={ModalFooter({ form: form, name: 'login' })}
 		>
 			<Form
 				form={form}
@@ -21,13 +19,11 @@ export default function Login(props: any) {
 			>
 				<Form.Item label='邮箱' field='email'
 					rules={[{
-						validator(value, cb) {
-							if (!value) return cb();
+						validator(value, callback) {
+							if (!value) return callback();
 							let valid = true;
-							if (value.indexOf('@') === -1 || value.indexOf('.com') === -1) {
-								valid = false;
-							}
-							return valid ? cb() : cb('请填写正确的邮箱格式');
+							if (value.indexOf('@') === -1 || value.indexOf('.com') === -1) valid = false;
+							return valid ? callback() : callback('请填写正确的邮箱格式');
 						}
 					}]}
 				>

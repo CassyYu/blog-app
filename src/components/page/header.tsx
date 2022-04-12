@@ -1,6 +1,5 @@
 import { Layout, Space, PageHeader, Popover, Image, Button } from "@arco-design/web-react"
 import { IconWechatpay, IconAlipayCircle, IconGithub, IconSunFill } from "@arco-design/web-react/icon";
-import { useState } from "react";
 import User from "../user";
 
 const { Header } = Layout;
