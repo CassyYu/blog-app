@@ -6,10 +6,13 @@ import { getArticleById } from '../../api/servers';
 import { Article } from '../../api/types';
 import Page404 from '../page/404';
 import createDOMPurify from 'dompurify';
+import { useHistory } from 'react-router-dom';
 
 export default function PostPage() {
 
 	const [article, setArticle] = useState<Article>();
+
+	const history = useHistory();
 
 	const DOMPurify = createDOMPurify(window);
 	const clean = DOMPurify.sanitize(article ? article.content : '');
@@ -27,7 +30,7 @@ export default function PostPage() {
 		<div className='flex'>
 			<div className='m-4 lg:mx-36 overflow-y-scroll w-full'>
 				<div className=''>
-					<IconBackward className='cursor-pointer' onClick={() => { window.history.back() }} />
+					<IconBackward className='cursor-pointer' onClick={() => history.push('/')} />
 				</div>
 				<div className='text-3xl font-bold my-4'>{article.title}</div>
 				<article>

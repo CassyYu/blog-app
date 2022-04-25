@@ -1,14 +1,16 @@
 import { Comment, List, Form, Input, Button, Message } from '@arco-design/web-react';
-import { useEffect, useState } from 'react';
-import { getCommentsByPostId, getUser, postComment } from '../../api/servers';
+import { useContext, useEffect, useState } from 'react';
+import { getCommentsByPostId, postComment } from '../../api/servers';
 import { CommentType } from '../../api/types';
+import { UserContext } from '../../App';
 import CommentItem from './commentItem';
 
 export default function Guestbook() {
 
   const [comments, setComments] = useState<CommentType[]>([]);
-  const [user, setUser] = useState();
   const [replyId, setReplyId] = useState<number>();
+
+  const { uname } = useContext(UserContext);
 
   const [form] = Form.useForm();
 
@@ -18,8 +20,6 @@ export default function Guestbook() {
       const post_id = parseInt(pathname.replace('/post/', ''));
       const res = await getCommentsByPostId(post_id);
       setComments(res.data);
-      const res1 = await getUser();
-      if (res1.code === 0) setUser(res1.data?.user.userName);
     })()
   }, [])
 
@@ -42,7 +42,7 @@ export default function Guestbook() {
         ) : <></>}
       </List>
       <Form form={form}>
-        {user ?
+        {uname.length ?
           <Comment
             align='right'
             actions={[
@@ -82,7 +82,7 @@ export default function Guestbook() {
           >
           </Comment>
         }
-      </Form >
+      </Form>
     </div >
   )
 }

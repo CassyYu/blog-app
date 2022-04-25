@@ -2,6 +2,7 @@ import { Modal, Form, Input, Button, AutoComplete, Message } from '@arco-design/
 import axios from '../../api/axios';
 import { useState } from 'react';
 import ModalFooter from './modalFooter';
+import { useHistory } from "react-router-dom";
 
 const { Option } = AutoComplete;
 
@@ -9,6 +10,8 @@ export default function Signup() {
 
 	const [form] = Form.useForm();
 	const [options, setOptions] = useState<string[]>();
+
+	const history = useHistory();
 
 	function getCode() {
 		axios.post('/user/code', { email: form.getFieldValue('email') })
@@ -18,7 +21,7 @@ export default function Signup() {
 					Message.info(message);
 				} else if (code === 1) {
 					Message.warning(message);
-					setTimeout(() => window.location.href = window.location.href.replace('/signup', 'login'), 1000);
+					history.push('/login');
 				} else if (code === 2) {
 					Message.warning(message);
 				}
@@ -36,7 +39,7 @@ export default function Signup() {
 		<Modal
 			title='注册'
 			visible={true}
-			onCancel={() => window.location.href = window.location.href.replace('/signup', '')}
+			onCancel={() => history.push(window.location.pathname.replace('/signup', ''))}
 			footer={ModalFooter({ form, name: 'signup' })}
 		>
 			<Form

@@ -1,15 +1,18 @@
 import { Modal, Form, Input } from '@arco-design/web-react';
 import ModalFooter from './modalFooter';
+import { useHistory } from "react-router-dom";
 
 export default function Login() {
 
 	const [form] = Form.useForm();
 
+	const history = useHistory();
+
 	return (
 		<Modal
 			title='登录'
 			visible={true}
-			onCancel={() => window.location.href = window.location.href.replace('/login', '')}
+			onCancel={() => history.push(window.location.pathname.replace('/login', ''))}
 			footer={ModalFooter({ form: form, name: 'login' })}
 		>
 			<Form
